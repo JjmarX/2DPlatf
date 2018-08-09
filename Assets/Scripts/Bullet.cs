@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
 
     private float speed = 10.0F;
     private SpriteRenderer sprite;
@@ -14,8 +16,15 @@ public class Bullet : MonoBehaviour {
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-	private void Update()
+    private void Start()
+    {
+        Destroy(gameObject, 1.7F);
+    }
+
+    private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
     }
 }
+
+  

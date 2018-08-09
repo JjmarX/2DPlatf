@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ public class Character : Unit
     private float speed = 3.0F;
     [SerializeField]
     private float jumpForce = 8.0F;
-    private Bullet bullet;
+    [SerializeField]
+    private GameObject bullet;
+    private float BulletSpeed = 7;
     private CharState State
     {
         get { return (CharState)animator.GetInteger("State"); }
@@ -29,7 +32,7 @@ new private Rigidbody2D rigidbody;
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        bullet = Resources.Load<Bullet>("Bullet");
+        
 
     }
 
@@ -67,9 +70,17 @@ new private Rigidbody2D rigidbody;
     }
 
     private void Shoot()
+    { // ЧТО ТУТ ПРОИСХОДИТ ВТФ? 
+        Vector3 position = new Vector3(transform.position.x + 0.8F, transform.position.y + 0.65F, transform.position.z);
+        var newBullet = Instantiate(bullet, position, bullet.transform.rotation);
+    
+        newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
+
+    }
+
+    private T Instantiate<T>(GameObject bullet, Vector3 position, Quaternion rotation)
     {
-        Vector3 position = transform.position; position.y = +1.0F;
-        Instantiate(bullet, position, bullet.transform.rotation);
+        throw new NotImplementedException();
     }
 
     private void CheckGround()
